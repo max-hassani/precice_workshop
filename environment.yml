@@ -2,6 +2,26 @@ channels:
 - conda-forge
 dependencies:
 - python
-- pyiron_atomistics =0.2.30
-- lammps =2021.09.29=*openmpi*
+- pyiron_atomistics =0.2.37
+- damask =3.0.0a5
+- fenics =2019.1.0
+- k3d
+- matplotlib
+- mshr =2019.1.0
+- panel =0.12.6
+- numpy
+- pyiron-data >=0.0.17
+- python-damask
+- pyvista
+- scipy
+- seaborn
+- scikit-image
+- lammps =2021.07.30=*mpich*
 - nglview =3.0.3
+- pymatgen =2022.2.10
+- sqsgenerator =0.0.5
+- vtk
+- pyprecice=2.3.0.1
+- pip
+- pip:
+      - git+https://github.com/precice/fenics-adapter.git
