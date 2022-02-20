@@ -1,12 +1,14 @@
 #!/bin/bash
 # pyiron config 
-python .github/ci_support/pyironconfig.py
-
-# import dataset
-bash .github/ci_support/import_dataset.sh
+git clone https://github.com/pyiron/pyiron_continuum pyiron_repo
+cd pyiron_repo
+git checkout precice_fenics_interface
+cp -r pyiron_continuum ../
+cd ../
+rm -r pyiron_repo
 
 # conda install papermill
-conda install -c conda-forge papermill
+conda install -c conda-forge papermill jupyter
 
 # execute notebooks
 current_dir=$(pwd)
