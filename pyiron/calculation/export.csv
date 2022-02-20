@@ -1,0 +1,2 @@
+,id,status,chemicalformula,job,subjob,project,timestart,timestop,totalcputime,computer,hamilton,hamversion,parentid,masterid
+0,0,finished,Si2,lmp_si,/lmp_si,save/old_calculation,2021-03-19 16:21:40.376046,2021-03-19 16:21:41.573096,1.0,pyiron@MacBook-Pro.local#1,Lammps,0.1,,

@@ -1,0 +1,35 @@
+{
+    "workflow_environment":"pyiron",
+    "title": "pyiron workflow template",
+    "authors": [
+        "author1 <email_address>",
+        "author2 <email_address>"
+    ],
+    "description": "description of what the workflow does",
+    "release": "0.0.1",
+    "keywords": [
+        "workflow",
+        "template",
+        "keyword1",
+        "keyword2"
+    ],
+    "categories":[
+        "category1, e.g., continuum/atomistics/experimental",
+        "catergory2, e.g., continuum/atomistics/experimental"
+    ],
+    "steps/codes":[
+        "step1, e.g., calculation of elastic modulus",
+        "code1, e.g., LAMMPS",
+        "step2, e.g., macroscopic response",
+        "code2, e.g., DAMASK"
+    ],
+    "license": {
+        "softwar1": "license1",
+        "software2": "license2"
+    },
+    "publication": [
+        "publication1",
+        "publication2"
+    ],
+    "logo" : "logo_dark.png"
+}
