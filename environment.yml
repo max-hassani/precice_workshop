@@ -2,7 +2,6 @@ channels:
 - conda-forge
 dependencies:
 - pyiron_base =0.5.4
-- pyiron
 - damask =3.0.0a5
 - fenics =2019.1.0
 - matplotlib
