@@ -172,22 +172,20 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   An interface to preCICE in pyiron workflows
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-workflow">
+   The workflow
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#binder-link">
    Binder Link
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#license">
-     License
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#license">
+   License
+  </a>
  </li>
 </ul>
 
@@ -209,22 +207,20 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   An interface to preCICE in pyiron workflows
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-workflow">
+   The workflow
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#binder-link">
    Binder Link
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#license">
-     License
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#license">
+   License
+  </a>
  </li>
 </ul>
 
@@ -238,13 +234,19 @@
   <p><a class="reference external" href="https://mybinder.org/v2/gh/muh-hassani/precice_workshop/master?labpath=fenics_precice_heat_conduction.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
 <div class="tex2jax_ignore mathjax_ignore section" id="an-interface-to-precice-in-pyiron-workflows">
 <h1>An interface to preCICE in pyiron workflows<a class="headerlink" href="#an-interface-to-precice-in-pyiron-workflows" title="Permalink to this headline">¶</a></h1>
+<p>Pyiron[<a class="reference external" href="https://pyiron.org">https://pyiron.org</a>] is an user-friendly integrated development environment for materials science, in which all necessary steps to develop and run complex simulation workflows can be performed and combined. This includes the initial setup, the remote/interactive submission on high-performance compute clusters (HPC), the post-processing, as well as the management, mining, and visualization of the produced data. Besides the core components for the workflow management, pyiron provides a high-level unified language for multiple simulation tools. Examples are density functional theory calculations on the electronic scale with <a class="reference external" href="http://sxrepo.mpie.de/">Sphinx</a>, molecular dynamics simulations on the atomic scale with <a class="reference external" href="http://www.lammps.org/">LAMMPS</a> or simulations of the elastoplastic response of materials on the continuum scale with <a class="reference external" href="https://damask.mpie.de/">DAMASK</a>.</p>
+<p>Using a Jupyter environment, pyiron worklows are easily accessible, can be shared alongside their publications, are reproducible and reusable, benefitting in particular from the interoperability between various simulation tools.</p>
+<p>Here, we present our recently developed pyiron job class to couple continuum scale tools using the preCICE python API. An example of two FEniCS simulations, coupled to solve heat transfer equations, is chosen as a demonstrator to highlight the ease and flexibility of using pyiron.</p>
+<div class="section" id="the-workflow">
+<h2>The workflow<a class="headerlink" href="#the-workflow" title="Permalink to this headline">¶</a></h2>
 <p>The workflow here uses <code class="docutils literal notranslate"><span class="pre">pyiron_continuum</span></code> to create two fenics jobs, which each solves heat conduction equations. Additionally, the job have a adapter_conf object, which defines the coupling between defined jobs using <code class="docutils literal notranslate"><span class="pre">fenics-precice</span></code> adapter.
 The configuration accepts the required json file, but additionally it can prescribe the coupling expression or coupling_data based on the type of boundary condition at the coupling boundary.</p>
 <p>After declaring the fenics jobs, a precice job is defined. Then the two fenics jobs are added to the newly created job. By running the precice job, the two child jobs run in parallel.</p>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="binder-link">
-<h1>Binder Link<a class="headerlink" href="#binder-link" title="Permalink to this headline">¶</a></h1>
-<p>To try the notebook by clicking <a class="reference external" href="https://mybinder.org/v2/gh/muh-hassani/precice_workshop/master?labpath=fenics_precice_heat_conduction.ipynb">here</a></p>
+<div class="section" id="binder-link">
+<h2>Binder Link<a class="headerlink" href="#binder-link" title="Permalink to this headline">¶</a></h2>
+<p>To try the notebook, click <a class="reference external" href="https://mybinder.org/v2/gh/muh-hassani/precice_workshop/master?labpath=fenics_precice_heat_conduction.ipynb">here</a></p>
+</div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>pyiron and this workflow are both licensed under the BSD-3-Clause license which is included in the <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file. In addition an <code class="docutils literal notranslate"><span class="pre">CODE_OF_CONDUCT.md</span></code> file is included to foster an open and welcoming environment.</p>
