@@ -1,5 +1,6 @@
+echo "- python =3.8" >> environment.yml
 # install environment 
-mamba env update --name notebook --file environment.yml
+conda env update --name notebook --file environment.yml
 
 git clone https://github.com/pyiron/pyiron_continuum pyiron_repo
 cd pyiron_repo
