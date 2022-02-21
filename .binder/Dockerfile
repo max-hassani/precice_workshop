@@ -1,4 +1,4 @@
-FROM muhhassani/precice-workshop:2022-02-21@sha256:9613839a8361844afa104fbbcb5380ac862e9ad07da3cf7d518dffe45453c1f5
+FROM muhhassani/precice-workshop:2022-02-21@sha256:d2325b246d0854706a9661b1fbe409ca0a3380338ef1efa831c557007743bd3e
 COPY . ${HOME}/
 
 USER root
