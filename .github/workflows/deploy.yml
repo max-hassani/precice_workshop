@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      CONDA_PREFIX: /usr/share/miniconda/
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.8
+        environment-file: .github/ci_support/environment.yml
+        auto-activate-base: false
+    - name: Install Jupyterbook
+      shell: bash -l {0}
+      run: |
+        echo "format: jb-book" > _toc.yml
+        echo "root: README" >> _toc.yml
+        echo "chapters:" >> _toc.yml
+        for f in $(find . -name '*.ipynb' | sort -n); do echo "- file: ${f#*/}" >> _toc.yml; done
+        curl https://pyiron.org/images/logo_dark.png --output logo_dark.png
+        bash .github/ci_support/write_book_config.sh
+        rm CODE_OF_CONDUCT.md LICENSE
+        cat _toc.yml
+        jupyter-book build . --path-output public
+    - run: mv public/_build/html public_html
+    - run: touch public_html/.nojekyll
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: public_html # The folder the action should deploy.
+        CLEAN: true
