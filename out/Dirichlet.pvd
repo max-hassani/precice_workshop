@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1">
+  <Collection>
+    <DataSet timestep="0" part="0" file="Dirichlet000000.vtu" />
+    <DataSet timestep="1" part="0" file="Dirichlet000001.vtu" />
+    <DataSet timestep="2" part="0" file="Dirichlet000002.vtu" />
+    <DataSet timestep="3" part="0" file="Dirichlet000003.vtu" />
+    <DataSet timestep="4" part="0" file="Dirichlet000004.vtu" />
+    <DataSet timestep="5" part="0" file="Dirichlet000005.vtu" />
+    <DataSet timestep="6" part="0" file="Dirichlet000006.vtu" />
+    <DataSet timestep="7" part="0" file="Dirichlet000007.vtu" />
+    <DataSet timestep="8" part="0" file="Dirichlet000008.vtu" />
+    <DataSet timestep="9" part="0" file="Dirichlet000009.vtu" />
+    <DataSet timestep="10" part="0" file="Dirichlet000010.vtu" />
+  </Collection>
+</VTKFile>
