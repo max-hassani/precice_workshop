@@ -1,13 +1,13 @@
 channels:
 - conda-forge
 dependencies:
+- pyiron_base =0.5.4
+- pyiron
 - damask =3.0.0a5
 - fenics =2019.1.0
-- k3d
 - matplotlib
 - mshr =2019.1.0
 - panel =0.12.6
-- numpy
 - pyiron-data >=0.0.17
 - pyvista
 - scipy
