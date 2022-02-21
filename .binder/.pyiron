@@ -1,3 +1,0 @@
-[DEFAULT]
-TOP_LEVEL_DIRS = /home/jovyan
-RESOURCE_PATHS = /srv/conda/envs/notebook/share/pyiron, /home/jovyan/pyiron/resources
