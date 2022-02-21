@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyiron workflow template &#8212; precice_workshop</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Heat conduction in a two-partitioned rectangular domain" href="fenics_precice_heat_conduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_dark.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">precice_workshop</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
+   pyiron workflow template
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="fenics_precice_heat_conduction.html">
+   Heat conduction in a two-partitioned rectangular domain
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://pyiron.org">pyiron</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-by-step">
+   Step by step
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repository-structure">
+   Repository structure
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notebooks">
+     notebooks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conda-environment">
+     conda environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#existing-calculation">
+     Existing calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#additional-pyiron-resources">
+     Additional pyiron resources
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyterbook">
+     Jupyterbook
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mybinder">
+     mybinder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continous-integration">
+     Continous integration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metadata">
+     Metadata
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#license">
+     License
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>pyiron workflow template</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-by-step">
+   Step by step
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repository-structure">
+   Repository structure
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notebooks">
+     notebooks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conda-environment">
+     conda environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#existing-calculation">
+     Existing calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#additional-pyiron-resources">
+     Additional pyiron resources
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyterbook">
+     Jupyterbook
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mybinder">
+     mybinder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continous-integration">
+     Continous integration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metadata">
+     Metadata
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#license">
+     License
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="pyiron-workflow-template">
+<h1>pyiron workflow template<a class="headerlink" href="#pyiron-workflow-template" title="Permalink to this headline">¶</a></h1>
+<p>This is a template repository how you can publish your calculation with pyiron. It consists of the repository <a class="reference external" href="https://github.com/materialdigital/pyiron-workflow-template">itself</a>, a small <a class="reference external" href="http://materialdigital.github.io/pyiron-workflow-template/">website</a> created with Jupyterbook and a <a class="reference external" href="https://mybinder.org/v2/gh/materialdigital/pyiron-workflow-template/HEAD?filepath=notebooks%2Fexample.ipynb">mybinder environment</a> for testing the calculation.</p>
+<p>You can fork this repository and populate it with your own data.</p>
+<div class="section" id="step-by-step">
+<h2>Step by step<a class="headerlink" href="#step-by-step" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Move your notebooks to the repository folder and remove the example notebook <code class="docutils literal notranslate"><span class="pre">example.ipynb</span></code>.</p></li>
+<li><p>Update the conda <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file with the conda dependencies required for your notebook.</p></li>
+<li><p>Include the export of your pyiron database in the <code class="docutils literal notranslate"><span class="pre">pyiron/calculation</span></code> folder or in case no calculation are required you can remove the <code class="docutils literal notranslate"><span class="pre">pyiron/calculation/save.tar.gz</span></code> archive and the <code class="docutils literal notranslate"><span class="pre">pyiron/calculation/export.csv</span></code> database backup file.</p></li>
+<li><p>Include additional pyiron resources in the <code class="docutils literal notranslate"><span class="pre">pyiron/resources</span></code> folder if required, otherwise the <code class="docutils literal notranslate"><span class="pre">pyiron/resources</span></code> folder can be deleted.</p></li>
+</ul>
+</div>
+<div class="section" id="repository-structure">
+<h2>Repository structure<a class="headerlink" href="#repository-structure" title="Permalink to this headline">¶</a></h2>
+<p>In the following the repsoitory structure is explained in more detail:</p>
+<div class="section" id="notebooks">
+<h3>notebooks<a class="headerlink" href="#notebooks" title="Permalink to this headline">¶</a></h3>
+<p>The repository folder contains one or more jupyter notebooks. These notebooks are executed during the unit tests and included in the website for easy readablity. The example notebook <code class="docutils literal notranslate"><span class="pre">example.ipynb</span></code> should be removed before publication.</p>
+</div>
+<div class="section" id="conda-environment">
+<h3>conda environment<a class="headerlink" href="#conda-environment" title="Permalink to this headline">¶</a></h3>
+<p>The repository folder also includes the conda <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file which defines the conda environment required to execute the notebooks in the repository folder. An existing environment can be exported using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">&gt;</span> <span class="pre">environment.yml</span></code> but it is recommended to reduce the environment to the minimal requirements as a large environment is less performant. Example conda <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="n">dependencies</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">python</span>
+<span class="o">-</span> <span class="n">pyiron_atomistics</span> <span class="o">=</span><span class="mf">0.2.8</span>
+<span class="o">-</span> <span class="n">lammps</span> <span class="o">=</span><span class="mf">2021.02.10</span><span class="o">=*</span><span class="n">openmpi</span><span class="o">*</span><span class="n">_4</span>
+<span class="o">-</span> <span class="n">nglview</span> <span class="o">=</span><span class="mf">2.7.7</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="existing-calculation">
+<h3>Existing calculation<a class="headerlink" href="#existing-calculation" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pyiron/calculation</span></code> folder includes previous calculation results which are published with this repository. In this example the calculation were calculated and exported using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_atomistics</span> <span class="kn">import</span> <span class="n">Project</span>
+<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;old_calculation&quot;</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Lammps</span><span class="p">(</span><span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;lmp_si&quot;</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">ase</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="s2">&quot;Si&quot;</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">destination_path</span><span class="o">=</span><span class="s2">&quot;save&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting files <code class="docutils literal notranslate"><span class="pre">export.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">save.tar.gz</span></code> have been copied to the <code class="docutils literal notranslate"><span class="pre">pyiron/calculation</span></code> folder.</p>
+</div>
+<div class="section" id="additional-pyiron-resources">
+<h3>Additional pyiron resources<a class="headerlink" href="#additional-pyiron-resources" title="Permalink to this headline">¶</a></h3>
+<p>Just like the pyiron resources folder the <code class="docutils literal notranslate"><span class="pre">pyiron/resources</span></code> folder can include additional resources like links to special executables or parameter files. In this example the <code class="docutils literal notranslate"><span class="pre">pyiron/resources</span></code> folder contains a special LAMMPS potential named <code class="docutils literal notranslate"><span class="pre">Si-quip-xml</span></code> which is required for the example notebook <code class="docutils literal notranslate"><span class="pre">example.ipynb</span></code>.</p>
+</div>
+<div class="section" id="jupyterbook">
+<h3>Jupyterbook<a class="headerlink" href="#jupyterbook" title="Permalink to this headline">¶</a></h3>
+<p>The jupyterbook is build using the github action <code class="docutils literal notranslate"><span class="pre">.github/workflows/book.yml</span></code> and it is deployed to github pages using <code class="docutils literal notranslate"><span class="pre">.github/workflows/deploy.yml</span></code>. Both github actions internally use the conda environment defined in <code class="docutils literal notranslate"><span class="pre">.github/ci_support/environment.yml</span></code>. But there should be no need to modify these files.</p>
+</div>
+<div class="section" id="mybinder">
+<h3>mybinder<a class="headerlink" href="#mybinder" title="Permalink to this headline">¶</a></h3>
+<p>Besides the conda environment in <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> the <code class="docutils literal notranslate"><span class="pre">.binder/postBuild</span></code> script is used to import the calculations stored in <code class="docutils literal notranslate"><span class="pre">pyiron/calculation</span></code> and install <code class="docutils literal notranslate"><span class="pre">NGLview</span></code> for both jupyter notebooks and jupyter lab. Finally the pyiron environment on mybinder is configured using the <code class="docutils literal notranslate"><span class="pre">.binder/.pyiron</span></code> file in this repository. Only the conda environment file <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> has to be updated by the user.</p>
+</div>
+<div class="section" id="continous-integration">
+<h3>Continous integration<a class="headerlink" href="#continous-integration" title="Permalink to this headline">¶</a></h3>
+<p>The rest of the files in the repository are used to test the environment. For continous integration the github actions are defined in <code class="docutils literal notranslate"><span class="pre">.github/workflows/notebooks.yml</span></code>. Again the conda environment file <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> is used to install all the dependencies, afterwards pyiron is configured in the test environment using <code class="docutils literal notranslate"><span class="pre">.github/ci_support/pyironconfig.py</span></code> and finally the notebooks are executed using <code class="docutils literal notranslate"><span class="pre">.github/ci_support/build_notebooks.sh</span></code>. Usually there is no need for the user to adjust any of these files other than the conda environment <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file.</p>
+</div>
+<div class="section" id="metadata">
+<h3>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h3>
+<p>In order to register the workflow in the PMD workflow store, the file <code class="docutils literal notranslate"><span class="pre">meta.json</span></code> is required. The file includes the essential metadata. The keys and their possible values are listed in the following table:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Requirement</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>title</p></td>
+<td><p>Mandatory</p></td>
+<td><p>the Label of the workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p>workflow_environment</p></td>
+<td><p>Mandatory</p></td>
+<td><p>pyiron or SimStack</p></td>
+</tr>
+<tr class="row-even"><td><p>description</p></td>
+<td><p>Mandatory</p></td>
+<td><p>the description of the workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p>authors</p></td>
+<td><p>Mandatory</p></td>
+<td><p>a list of authors’ names and optional their email addresses e.g. [“Author One <a class="reference external" href="mailto:a1&#37;&#52;&#48;example&#46;de">mailto:a1<span>&#64;</span>example<span>&#46;</span>de</a>”, “Author Two <a class="reference external" href="mailto:a2&#37;&#52;&#48;example&#46;de">mailto:a2<span>&#64;</span>example<span>&#46;</span>de</a>”]</p></td>
+</tr>
+<tr class="row-even"><td><p>release</p></td>
+<td><p>Mandatory</p></td>
+<td><p>version information of the release</p></td>
+</tr>
+<tr class="row-odd"><td><p>keywords</p></td>
+<td><p>Mandatory</p></td>
+<td><p>a list of keywords for the workflow (From a list of available keywords, making it possible to be queried via Ontology)</p></td>
+</tr>
+<tr class="row-even"><td><p>categories</p></td>
+<td><p>Optional</p></td>
+<td><p>a list of categories, e.g., atomistics, continuum, experimental</p></td>
+</tr>
+<tr class="row-odd"><td><p>steps/codes</p></td>
+<td><p>Optional</p></td>
+<td><p>a list of steps/codes, e.g., LAMMPS, DAMASK, calculation of elastic modulus</p></td>
+</tr>
+<tr class="row-even"><td><p>licenses</p></td>
+<td><p>Optional</p></td>
+<td><p>a dictionary where the keys are the packages used in the workflow and the values are the corresponding license type. <br> e.g. ‘pyiron’:’BSD-3’</p></td>
+</tr>
+<tr class="row-odd"><td><p>publications</p></td>
+<td><p>Optional</p></td>
+<td><p>a list of publications</p></td>
+</tr>
+<tr class="row-even"><td><p>logo</p></td>
+<td><p>Optional</p></td>
+<td><p>path to the logo of the workflow within the repository</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<p>pyiron and also the pyiron publication template are licensed under the BSD-3-Clause license which is included in the <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file. In addition an <code class="docutils literal notranslate"><span class="pre">CODE_OF_CONDUCT.md</span></code> file is included to foster an open and welcoming environment.</p>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="fenics_precice_heat_conduction.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Heat conduction in a two-partitioned rectangular domain</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By pyiron<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

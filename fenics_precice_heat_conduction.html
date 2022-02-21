@@ -1,0 +1,1863 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heat conduction in a two-partitioned rectangular domain &#8212; precice_workshop</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pyiron workflow template" href="README.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_dark.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">precice_workshop</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   pyiron workflow template
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Heat conduction in a two-partitioned rectangular domain
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://pyiron.org">pyiron</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/fenics_precice_heat_conduction.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/muh-hassani/precice_workshop/master?urlpath=lab/tree/fenics_precice_heat_conduction.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dirichlet-partition">
+   Dirichlet partition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-domain-and-mesh">
+     The domain and mesh
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-the-coupled-and-non-coupled-boundaries">
+     Defining the coupled and non-coupled boundaries
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#non-coupled-boundary">
+       Non-coupled boundary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#coupled-subdomain">
+       Coupled subdomain
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pde-equation">
+     PDE equation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initial-condition">
+       Initial Condition
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#precice-adaptor-configuration">
+     Precice Adaptor configuration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neumann-partition">
+   Neumann Partition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-precice-job">
+     Creating Precice job
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Heat conduction in a two-partitioned rectangular domain</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dirichlet-partition">
+   Dirichlet partition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-domain-and-mesh">
+     The domain and mesh
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-the-coupled-and-non-coupled-boundaries">
+     Defining the coupled and non-coupled boundaries
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#non-coupled-boundary">
+       Non-coupled boundary
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#coupled-subdomain">
+       Coupled subdomain
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pde-equation">
+     PDE equation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initial-condition">
+       Initial Condition
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#precice-adaptor-configuration">
+     Precice Adaptor configuration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neumann-partition">
+   Neumann Partition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-precice-job">
+     Creating Precice job
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="heat-conduction-in-a-two-partitioned-rectangular-domain">
+<h1>Heat conduction in a two-partitioned rectangular domain<a class="headerlink" href="#heat-conduction-in-a-two-partitioned-rectangular-domain" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/precice/tutorials/tree/master/partitioned-heat-conduction">https://github.com/precice/tutorials/tree/master/partitioned-heat-conduction</a></p>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>We solve a simple heat equation. The domain is partitioned and the coupling is established in a Dirichlet-Neumann fashion.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>We solve a partitioned heat equation. For information on the non-partitioned case, please refer to [1, p.37ff]. In this tutorial the computational domain is partitioned and coupled via preCICE. The coupling roughly follows the approach described in [2].</p>
+<p><img alt="Case setup of partitioned-heat-conduction case" src="_images/tutorials-partitioned-heat-conduction-setup.png" /></p>
+<p>Case setup from [3]. <code class="docutils literal notranslate"><span class="pre">D</span></code> denotes the Dirichlet participant and <code class="docutils literal notranslate"><span class="pre">N</span></code> denotes the Neumann participant.</p>
+<p>The heat equation is solved on a rectangular domain <code class="docutils literal notranslate"><span class="pre">Omega</span> <span class="pre">=</span> <span class="pre">[0,2]</span> <span class="pre">x</span> <span class="pre">[0,1]</span></code> with given Dirichlet boundary conditions. We split the domain at <code class="docutils literal notranslate"><span class="pre">x_c</span> <span class="pre">=</span> <span class="pre">1</span></code> using a straight vertical line, the coupling interface. The left part of the domain will be referred to as the Dirichlet partition and the right part as the Neumann partition. To couple the two participants we use Dirichlet-Neumann coupling. Here, the Dirichlet participant receives Dirichlet boundary conditions (<code class="docutils literal notranslate"><span class="pre">Temperature</span></code>) at the coupling interface and solves the heat equation using these boundary conditions on the left part of the domain. Then the Dirichlet participant computes the resulting heat flux (<code class="docutils literal notranslate"><span class="pre">Flux</span></code>) from the solution and sends it to the Neumann participant. The Neumann participant uses the flux as a Neumann boundary condition to solve the heat equation on the right part of the domain. We then extract the temperature from the solution and send it back to the Dirichlet participant. This establishes the coupling between the two participants.</p>
+<p>This simple case allows us to compare the solution for the partitioned case to a known analytical solution (method of manufactures solutions, see [1, p.37ff]). For more usage examples and details, please refer to [3, sect. 4.1].</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_continuum</span> <span class="kn">import</span> <span class="n">Project</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;partitioned_heat_conduction&#39;</span><span class="p">)</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs</span><span class="p">(</span><span class="n">silently</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "2da233c7858e47e2985d480ad78d3f8a", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="dirichlet-partition">
+<h2>Dirichlet partition<a class="headerlink" href="#dirichlet-partition" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Fenics</span><span class="p">(</span><span class="s1">&#39;fenics_drichlet&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/pyiron_continuum/fenics/job/generic.py:129: UserWarning: Currently, the c++ dolfin functions used by fenics are not stored in the HDF5 file. This includes the domains, boundary condition, spatial functions. Therefore, it is not possible to reload the job properly, from HDF5 file. It would be safe to remove the Fenics jobs, after defining the project.
+  warnings.warn(&quot;Currently, the c++ dolfin functions used by fenics are not stored in the HDF5 file.&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-domain-and-mesh">
+<h3>The domain and mesh<a class="headerlink" href="#the-domain-and-mesh" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_bottom</span><span class="p">,</span> <span class="n">y_top</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">x_left</span><span class="p">,</span> <span class="n">x_right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">x_coupling</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># x coordinate of coupling interface</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">nx</span> <span class="o">=</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># parameter alpha</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1.3</span>  <span class="c1"># parameter beta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">element_order</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">element_type</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;P&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">regular</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">x_left</span><span class="p">,</span> <span class="n">y_bottom</span><span class="p">),</span> <span class="p">(</span><span class="n">x_coupling</span><span class="p">,</span> <span class="n">y_top</span><span class="p">),</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">diagonal</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">mesh</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="generator" content="FEniCS/DOLFIN (http://fenicsproject.org)" />
+    <title>FEniCS/DOLFIN X3DOM plot</title>
+    <script type="text/javascript" src="https://www.x3dom.org/download/x3dom.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/plscott/fenics-x3dom/master/x3dom_support.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.x3dom.org/download/x3dom.css" />
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/plscott/fenics-x3dom/master/x3dom_support.css" />
+  </head>
+  <body>
+    <x3d showStat="false" xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500.000000px" height="400.000000px">
+      <scene>
+        <shape>
+          <appearance>
+            <material diffuseColor="1.000000 1.000000 1.000000" emissiveColor="0.000000 0.000000 0.000000" specularColor="0.000000 0.000000 0.000000" ambientIntensity="0" shininess="0.5" transparency="0"></material>
+          </appearance>
+          <indexedFaceSet solid="false" colorPerVertex="false" coordIndex="0 10 1 -1 1 11 10 -1 1 11 2 -1 2 12 11 -1 2 12 3 -1 3 13 12 -1 3 13 4 -1 4 14 13 -1 4 14 5 -1 5 15 14 -1 5 15 6 -1 6 16 15 -1 6 16 7 -1 7 17 16 -1 7 17 8 -1 8 18 17 -1 8 18 9 -1 9 19 18 -1 10 20 11 -1 11 21 20 -1 11 21 12 -1 12 22 21 -1 12 22 13 -1 13 23 22 -1 13 23 14 -1 14 24 23 -1 14 24 15 -1 15 25 24 -1 15 25 16 -1 16 26 25 -1 16 26 17 -1 17 27 26 -1 17 27 18 -1 18 28 27 -1 18 28 19 -1 19 29 28 -1 20 30 21 -1 21 31 30 -1 21 31 22 -1 22 32 31 -1 22 32 23 -1 23 33 32 -1 23 33 24 -1 24 34 33 -1 24 34 25 -1 25 35 34 -1 25 35 26 -1 26 36 35 -1 26 36 27 -1 27 37 36 -1 27 37 28 -1 28 38 37 -1 28 38 29 -1 29 39 38 -1 30 40 31 -1 31 41 40 -1 31 41 32 -1 32 42 41 -1 32 42 33 -1 33 43 42 -1 33 43 34 -1 34 44 43 -1 34 44 35 -1 35 45 44 -1 35 45 36 -1 36 46 45 -1 36 46 37 -1 37 47 46 -1 37 47 38 -1 38 48 47 -1 38 48 39 -1 39 49 48 -1 40 50 41 -1 41 51 50 -1 41 51 42 -1 42 52 51 -1 42 52 43 -1 43 53 52 -1 43 53 44 -1 44 54 53 -1 44 54 45 -1 45 55 54 -1 45 55 46 -1 46 56 55 -1 46 56 47 -1 47 57 56 -1 47 57 48 -1 48 58 57 -1 48 58 49 -1 49 59 58 -1 50 60 51 -1 51 61 60 -1 51 61 52 -1 52 62 61 -1 52 62 53 -1 53 63 62 -1 53 63 54 -1 54 64 63 -1 54 64 55 -1 55 65 64 -1 55 65 56 -1 56 66 65 -1 56 66 57 -1 57 67 66 -1 57 67 58 -1 58 68 67 -1 58 68 59 -1 59 69 68 -1 60 70 61 -1 61 71 70 -1 61 71 62 -1 62 72 71 -1 62 72 63 -1 63 73 72 -1 63 73 64 -1 64 74 73 -1 64 74 65 -1 65 75 74 -1 65 75 66 -1 66 76 75 -1 66 76 67 -1 67 77 76 -1 67 77 68 -1 68 78 77 -1 68 78 69 -1 69 79 78 -1 70 80 71 -1 71 81 80 -1 71 81 72 -1 72 82 81 -1 72 82 73 -1 73 83 82 -1 73 83 74 -1 74 84 83 -1 74 84 75 -1 75 85 84 -1 75 85 76 -1 76 86 85 -1 76 86 77 -1 77 87 86 -1 77 87 78 -1 78 88 87 -1 78 88 79 -1 79 89 88 -1 80 90 81 -1 81 91 90 -1 81 91 82 -1 82 92 91 -1 82 92 83 -1 83 93 92 -1 83 93 84 -1 84 94 93 -1 84 94 85 -1 85 95 94 -1 85 95 86 -1 86 96 95 -1 86 96 87 -1 87 97 96 -1 87 97 88 -1 88 98 97 -1 88 98 89 -1 89 99 98 -1 ">
+            <coordinate point="0 0 0 0.111111 0 0 0.222222 0 0 0.333333 0 0 0.444444 0 0 0.555556 0 0 0.666667 0 0 0.777778 0 0 0.888889 0 0 1 0 0 0 0.111111 0 0.111111 0.111111 0 0.222222 0.111111 0 0.333333 0.111111 0 0.444444 0.111111 0 0.555556 0.111111 0 0.666667 0.111111 0 0.777778 0.111111 0 0.888889 0.111111 0 1 0.111111 0 0 0.222222 0 0.111111 0.222222 0 0.222222 0.222222 0 0.333333 0.222222 0 0.444444 0.222222 0 0.555556 0.222222 0 0.666667 0.222222 0 0.777778 0.222222 0 0.888889 0.222222 0 1 0.222222 0 0 0.333333 0 0.111111 0.333333 0 0.222222 0.333333 0 0.333333 0.333333 0 0.444444 0.333333 0 0.555556 0.333333 0 0.666667 0.333333 0 0.777778 0.333333 0 0.888889 0.333333 0 1 0.333333 0 0 0.444444 0 0.111111 0.444444 0 0.222222 0.444444 0 0.333333 0.444444 0 0.444444 0.444444 0 0.555556 0.444444 0 0.666667 0.444444 0 0.777778 0.444444 0 0.888889 0.444444 0 1 0.444444 0 0 0.555556 0 0.111111 0.555556 0 0.222222 0.555556 0 0.333333 0.555556 0 0.444444 0.555556 0 0.555556 0.555556 0 0.666667 0.555556 0 0.777778 0.555556 0 0.888889 0.555556 0 1 0.555556 0 0 0.666667 0 0.111111 0.666667 0 0.222222 0.666667 0 0.333333 0.666667 0 0.444444 0.666667 0 0.555556 0.666667 0 0.666667 0.666667 0 0.777778 0.666667 0 0.888889 0.666667 0 1 0.666667 0 0 0.777778 0 0.111111 0.777778 0 0.222222 0.777778 0 0.333333 0.777778 0 0.444444 0.777778 0 0.555556 0.777778 0 0.666667 0.777778 0 0.777778 0.777778 0 0.888889 0.777778 0 1 0.777778 0 0 0.888889 0 0.111111 0.888889 0 0.222222 0.888889 0 0.333333 0.888889 0 0.444444 0.888889 0 0.555556 0.888889 0 0.666667 0.888889 0 0.777778 0.888889 0 0.888889 0.888889 0 1 0.888889 0 0 1 0 0.111111 1 0 0.222222 1 0 0.333333 1 0 0.444444 1 0 0.555556 1 0 0.666667 1 0 0.777778 1 0 0.888889 1 0 1 1 0 "></coordinate>
+          </indexedFaceSet>
+        </shape>
+        <shape>
+          <appearance>
+            <material emissiveColor="0.000000 0.000000 0.000000" specularColor="0.000000 0.000000 0.000000" ambientIntensity="0" shininess="0.5" transparency="0"></material>
+          </appearance>
+          <indexedLineSet solid="false" colorPerVertex="false" coordIndex="0 1 -1 0 10 -1 1 2 -1 1 10 -1 1 11 -1 2 3 -1 2 11 -1 2 12 -1 3 4 -1 3 12 -1 3 13 -1 4 5 -1 4 13 -1 4 14 -1 5 6 -1 5 14 -1 5 15 -1 6 7 -1 6 15 -1 6 16 -1 7 8 -1 7 16 -1 7 17 -1 8 9 -1 8 17 -1 8 18 -1 9 18 -1 9 19 -1 10 11 -1 10 20 -1 11 12 -1 11 20 -1 11 21 -1 12 13 -1 12 21 -1 12 22 -1 13 14 -1 13 22 -1 13 23 -1 14 15 -1 14 23 -1 14 24 -1 15 16 -1 15 24 -1 15 25 -1 16 17 -1 16 25 -1 16 26 -1 17 18 -1 17 26 -1 17 27 -1 18 19 -1 18 27 -1 18 28 -1 19 28 -1 19 29 -1 20 21 -1 20 30 -1 21 22 -1 21 30 -1 21 31 -1 22 23 -1 22 31 -1 22 32 -1 23 24 -1 23 32 -1 23 33 -1 24 25 -1 24 33 -1 24 34 -1 25 26 -1 25 34 -1 25 35 -1 26 27 -1 26 35 -1 26 36 -1 27 28 -1 27 36 -1 27 37 -1 28 29 -1 28 37 -1 28 38 -1 29 38 -1 29 39 -1 30 31 -1 30 40 -1 31 32 -1 31 40 -1 31 41 -1 32 33 -1 32 41 -1 32 42 -1 33 34 -1 33 42 -1 33 43 -1 34 35 -1 34 43 -1 34 44 -1 35 36 -1 35 44 -1 35 45 -1 36 37 -1 36 45 -1 36 46 -1 37 38 -1 37 46 -1 37 47 -1 38 39 -1 38 47 -1 38 48 -1 39 48 -1 39 49 -1 40 41 -1 40 50 -1 41 42 -1 41 50 -1 41 51 -1 42 43 -1 42 51 -1 42 52 -1 43 44 -1 43 52 -1 43 53 -1 44 45 -1 44 53 -1 44 54 -1 45 46 -1 45 54 -1 45 55 -1 46 47 -1 46 55 -1 46 56 -1 47 48 -1 47 56 -1 47 57 -1 48 49 -1 48 57 -1 48 58 -1 49 58 -1 49 59 -1 50 51 -1 50 60 -1 51 52 -1 51 60 -1 51 61 -1 52 53 -1 52 61 -1 52 62 -1 53 54 -1 53 62 -1 53 63 -1 54 55 -1 54 63 -1 54 64 -1 55 56 -1 55 64 -1 55 65 -1 56 57 -1 56 65 -1 56 66 -1 57 58 -1 57 66 -1 57 67 -1 58 59 -1 58 67 -1 58 68 -1 59 68 -1 59 69 -1 60 61 -1 60 70 -1 61 62 -1 61 70 -1 61 71 -1 62 63 -1 62 71 -1 62 72 -1 63 64 -1 63 72 -1 63 73 -1 64 65 -1 64 73 -1 64 74 -1 65 66 -1 65 74 -1 65 75 -1 66 67 -1 66 75 -1 66 76 -1 67 68 -1 67 76 -1 67 77 -1 68 69 -1 68 77 -1 68 78 -1 69 78 -1 69 79 -1 70 71 -1 70 80 -1 71 72 -1 71 80 -1 71 81 -1 72 73 -1 72 81 -1 72 82 -1 73 74 -1 73 82 -1 73 83 -1 74 75 -1 74 83 -1 74 84 -1 75 76 -1 75 84 -1 75 85 -1 76 77 -1 76 85 -1 76 86 -1 77 78 -1 77 86 -1 77 87 -1 78 79 -1 78 87 -1 78 88 -1 79 88 -1 79 89 -1 80 81 -1 80 90 -1 81 82 -1 81 90 -1 81 91 -1 82 83 -1 82 91 -1 82 92 -1 83 84 -1 83 92 -1 83 93 -1 84 85 -1 84 93 -1 84 94 -1 85 86 -1 85 94 -1 85 95 -1 86 87 -1 86 95 -1 86 96 -1 87 88 -1 87 96 -1 87 97 -1 88 89 -1 88 97 -1 88 98 -1 89 98 -1 89 99 -1 90 91 -1 91 92 -1 92 93 -1 93 94 -1 94 95 -1 95 96 -1 96 97 -1 97 98 -1 98 99 -1 ">
+            <coordinate point="0 0 0 0.111111 0 0 0.222222 0 0 0.333333 0 0 0.444444 0 0 0.555556 0 0 0.666667 0 0 0.777778 0 0 0.888889 0 0 1 0 0 0 0.111111 0 0.111111 0.111111 0 0.222222 0.111111 0 0.333333 0.111111 0 0.444444 0.111111 0 0.555556 0.111111 0 0.666667 0.111111 0 0.777778 0.111111 0 0.888889 0.111111 0 1 0.111111 0 0 0.222222 0 0.111111 0.222222 0 0.222222 0.222222 0 0.333333 0.222222 0 0.444444 0.222222 0 0.555556 0.222222 0 0.666667 0.222222 0 0.777778 0.222222 0 0.888889 0.222222 0 1 0.222222 0 0 0.333333 0 0.111111 0.333333 0 0.222222 0.333333 0 0.333333 0.333333 0 0.444444 0.333333 0 0.555556 0.333333 0 0.666667 0.333333 0 0.777778 0.333333 0 0.888889 0.333333 0 1 0.333333 0 0 0.444444 0 0.111111 0.444444 0 0.222222 0.444444 0 0.333333 0.444444 0 0.444444 0.444444 0 0.555556 0.444444 0 0.666667 0.444444 0 0.777778 0.444444 0 0.888889 0.444444 0 1 0.444444 0 0 0.555556 0 0.111111 0.555556 0 0.222222 0.555556 0 0.333333 0.555556 0 0.444444 0.555556 0 0.555556 0.555556 0 0.666667 0.555556 0 0.777778 0.555556 0 0.888889 0.555556 0 1 0.555556 0 0 0.666667 0 0.111111 0.666667 0 0.222222 0.666667 0 0.333333 0.666667 0 0.444444 0.666667 0 0.555556 0.666667 0 0.666667 0.666667 0 0.777778 0.666667 0 0.888889 0.666667 0 1 0.666667 0 0 0.777778 0 0.111111 0.777778 0 0.222222 0.777778 0 0.333333 0.777778 0 0.444444 0.777778 0 0.555556 0.777778 0 0.666667 0.777778 0 0.777778 0.777778 0 0.888889 0.777778 0 1 0.777778 0 0 0.888889 0 0.111111 0.888889 0 0.222222 0.888889 0 0.333333 0.888889 0 0.444444 0.888889 0 0.555556 0.888889 0 0.666667 0.888889 0 0.777778 0.888889 0 0.888889 0.888889 0 1 0.888889 0 0 1 0 0.111111 1 0 0.222222 1 0 0.333333 1 0 0.444444 1 0 0.555556 1 0 0.666667 1 0 0.777778 1 0 0.888889 1 0 1 1 0 "></coordinate>
+          </indexedLineSet>
+        </shape>
+        <viewpoint id="default" position="1.914214 1.914214 1.414214" orientation="-0.7071067812 0.7071067812 0 1" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="top" position="0.500000 2.500000 0.000000" orientation="-1 0 0 1.5707963267948" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="bottom" position="0.500000 -1.500000 0.000000" orientation="1 0 0 1.5707963267948" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="left" position="2.500000 0.500000 0.000000" orientation="0 1 0 1.5707963267948" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="right" position="-1.500000 0.500000 0.000000" orientation="0 -1 0 1.5707963267948" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="back" position="0.500000 0.500000 -2.000000" orientation="0 1 0 3.1415926535898" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <viewpoint id="front" position="0.500000 0.500000 2.000000" orientation="0 0 0 1" fieldOfView="0.785398" centerOfRotation="0.500000 0.500000 0.000000" zNear="-1" zFar="-1"></viewpoint>
+        <background skyColor="0.950000 0.950000 0.950000"></background>
+        <directionalLight ambientIntensity="0" intensity="1"></directionalLight>
+      </scene>
+    </x3d>
+    <div id="menu"><form id="menu-items"><input type="radio" id="button-options" name="menu" checked="" />
+        <label for="button-options">Options</label>
+        <input type="radio" id="button-summary" name="menu" />
+        <label for="button-summary" style="display: none;">Summary</label>
+        <input type="radio" id="button-color" name="menu" />
+        <label for="button-color" style="display: none;">Color</label>
+        <input type="radio" id="button-warp" name="menu" />
+        <label for="button-warp" style="display: none;">Warp</label>
+        <input type="radio" id="button-viewpoints" name="menu" />
+        <label for="button-viewpoints" style="display: none;">Viewpoints</label>
+      </form>
+      <div id="menu-content"><div id="content-options" for="button-options"><span>Menu Options</span>
+          <br />
+          <form class="options"><input type="checkbox" id="select-summary" />
+            <label for="select-summary">Summary</label>
+          </form>
+          <br />
+          <form class="options"><input type="checkbox" id="select-color" />
+            <label for="select-color">Color</label>
+          </form>
+          <br />
+          <form class="options"><input type="checkbox" id="select-warp" />
+            <label for="select-warp">Warp</label>
+          </form>
+          <br />
+          <form class="options"><input type="checkbox" id="select-viewpoints" />
+            <label for="select-viewpoints">Viewpoints</label>
+          </form>
+        </div>
+        <div id="content-summary" for="button-summary" hidden="">Number of vertices: 100<br />Number of cells: 162</div>
+        <div id="content-color" for="button-color" hidden=""><form>
+            <input id="color-checkbox" type="checkbox" checked="" />
+            <label for="color-checkbox">Show Color</label>
+          </form>Current Color Map:<br />
+          <span id="min-color-value"></span>
+          <span id="color-map"></span>
+          <span id="max-color-value"></span>
+        </div>
+        <div id="content-warp" for="button-warp" hidden=""><form>
+            <input id="warp-checkbox" type="checkbox" />
+            <label for="warp-checkbox">Warp By Scalar</label>
+            <br />
+            <input id="warp-slider" type="range" min="0" max="5" step="0.01" value="1" disabled="" />
+            <br />
+            <label id="warp-slider-val" for="warp-slider">1</label>
+          </form>
+        </div>
+        <div id="content-viewpoints" for="button-viewpoints" hidden=""><span>Viewpoint Options</span>
+          <br />
+          <button class="viewpoint">front</button>
+          <button class="viewpoint">back</button>
+          <button class="viewpoint">left</button>
+          <br />
+          <button class="viewpoint">right</button>
+          <button class="viewpoint">top</button>
+          <button class="viewpoint">bottom</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+</div></div>
+</div>
+</div>
+<div class="section" id="defining-the-coupled-and-non-coupled-boundaries">
+<h3>Defining the coupled and non-coupled boundaries<a class="headerlink" href="#defining-the-coupled-and-non-coupled-boundaries" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="non-coupled-boundary">
+<h4>Non-coupled boundary<a class="headerlink" href="#non-coupled-boundary" title="Permalink to this headline">¶</a></h4>
+<p>Dirichlet boundary at the non-coupled boundaries, based on the expression <code class="docutils literal notranslate"><span class="pre">u_D</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditions_non_coupling</span> <span class="o">=</span> <span class="s1">&#39;not near(x[0], 1.0, 1E-14) </span><span class="se">\</span>
+<span class="s1">                                    or near(x[1], 1.0, 1E-14) or near(x[1], 0., 1E-14)&#39;</span>   
+<span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">subdomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;non_coupling_boundary&#39;</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">conditions_non_coupling</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_analytical</span> <span class="o">=</span> <span class="n">job_d</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="s1">&#39;1 + x[0]*x[0] + alpha*x[1]*x[1] + beta*t&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="n">bc_type</span><span class="o">=</span><span class="s1">&#39;dirichlet&#39;</span><span class="p">,</span> <span class="n">subdomain_name</span><span class="o">=</span><span class="s1">&#39;non_coupling_boundary&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="n">u_analytical</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="coupled-subdomain">
+<h4>Coupled subdomain<a class="headerlink" href="#coupled-subdomain" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditions_coupling_bc</span> <span class="o">=</span> <span class="s1">&#39;near(x[0], 1.0, 1E-14)&#39;</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">subdomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;coupling_boundary&#39;</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">conditions_coupling_bc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">list_subdomains</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;non_coupling_boundary&#39;: &lt;pyiron_continuum.fenics.factory.FenicsSubDomain at 0x7f71cc33a310&gt;,
+ &#39;coupling_boundary&#39;: &lt;pyiron_continuum.fenics.factory.FenicsSubDomain at 0x7f7145806ea0&gt;}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pde-equation">
+<h3>PDE equation<a class="headerlink" href="#pde-equation" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">input</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>DataContainer({
+  "mesh_resolution": "2",
+  "element_type": "'P'",
+  "element_order": "2",
+  "n_steps": "1",
+  "n_print": "1",
+  "dt": "0.1",
+  "solver_parameters": "{}"
+})</pre></div></div>
+</div>
+<div class="section" id="initial-condition">
+<h4>Initial Condition<a class="headerlink" href="#initial-condition" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set_initial_condition</span><span class="p">(</span><span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="n">u_analytical</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The intial value will be assigned to &#39;u_n&#39;!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">u_n</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job_d.solver.set_expression(key=&#39;f&#39;, expression=&#39;beta - 2 - 2*alpha&#39;, degree=2, alpha=alpha, beta=beta)</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">job_d</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">u_analytical</span><span class="o">.</span><span class="n">beta</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">u_analytical</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficient(FunctionSpace(None, FiniteElement(&#39;Real&#39;, None, 0)), 19)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="s1">&#39;u * v / dt * dx + dot(grad(u), grad(v)) * dx - (u_n / dt + f) * v * dx&#39;</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solution</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">time_dependent_expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_analytical</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="precice-adaptor-configuration">
+<h3>Precice Adaptor configuration<a class="headerlink" href="#precice-adaptor-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux_normal_interpolated</span> <span class="o">=</span> <span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">function_space</span><span class="o">=</span><span class="n">job_d</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">V_g</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">collapse</span><span class="p">(),</span>
+                                                    <span class="n">expression</span><span class="o">=</span><span class="s2">&quot;2 * x[0]&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_d</span><span class="o">.</span><span class="n">init_adapter_conf</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="s1">&#39;precice_config/precice-adapter-config-D.json&#39;</span><span class="p">,</span> <span class="n">coupling_boundary_subdomain</span><span class="o">=</span><span class="s1">&#39;coupling_boundary&#39;</span><span class="p">,</span>
+                                                    <span class="n">write_object</span><span class="o">=</span><span class="n">flux_normal_interpolated</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job_d.adapter_conf.predefined_coupling(coupling_type=&#39;Dirichlet&#39;, flux_direction=&#39;x&#39;)</span>
+<span class="k">def</span> <span class="nf">update_coupling_dirichlet</span><span class="p">(</span><span class="n">coupling_expression</span><span class="p">,</span> <span class="n">coupling_boundary</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="n">bc_type</span><span class="o">=</span><span class="s1">&#39;dirichlet&#39;</span><span class="p">,</span> <span class="n">subdomain_name</span><span class="o">=</span><span class="n">coupling_boundary</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="n">coupling_expression</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">coupling_data_dirichlet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Flux&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">calc_flux</span><span class="p">()</span>
+    <span class="n">flux_x</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">function_space</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">write_object</span><span class="o">.</span><span class="n">function_space</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">flux_x</span>
+
+<span class="n">job_d</span><span class="o">.</span><span class="n">adapter_conf</span><span class="o">.</span><span class="n">update_boundary_func</span> <span class="o">=</span> <span class="n">update_coupling_dirichlet</span>
+<span class="n">job_d</span><span class="o">.</span><span class="n">adapter_conf</span><span class="o">.</span><span class="n">coupling_data_func</span> <span class="o">=</span> <span class="n">coupling_data_dirichlet</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="neumann-partition">
+<h2>Neumann Partition<a class="headerlink" href="#neumann-partition" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Fenics</span><span class="p">(</span><span class="s1">&#39;fenics_neumann&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">regular</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">x_left</span><span class="p">,</span> <span class="n">y_bottom</span><span class="p">),</span> <span class="p">(</span><span class="n">x_coupling</span><span class="p">,</span> <span class="n">y_top</span><span class="p">),</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">diagonal</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_analytical_n</span> <span class="o">=</span> <span class="n">job_n</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span><span class="s1">&#39;1 + x[0]*x[0] + alpha*x[1]*x[1] + beta*t&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">subdomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;non_coupling_boundary&#39;</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">conditions_non_coupling</span><span class="p">)</span>
+<span class="n">job_n</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="n">bc_type</span><span class="o">=</span><span class="s1">&#39;dirichlet&#39;</span><span class="p">,</span> <span class="n">subdomain_name</span><span class="o">=</span><span class="s1">&#39;non_coupling_boundary&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="n">u_analytical_n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">subdomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;coupling_boundary&#39;</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="n">conditions_coupling_bc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">set_initial_condition</span><span class="p">(</span><span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="n">u_analytical_n</span><span class="p">)</span>
+<span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">u_n</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">time_dependent_expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_analytical_n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The intial value will be assigned to &#39;u_n&#39;!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job_n.solver.set_expression(key=&#39;f&#39;, expression=&#39;beta - 2 - 2*alpha&#39;, degree=2, alpha=alpha, beta=beta)</span>
+<span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">job_n</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">u_analytical_n</span><span class="o">.</span><span class="n">beta</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">u_analytical_n</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficient(FunctionSpace(None, FiniteElement(&#39;Real&#39;, None, 0)), 47)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="s1">&#39;u * v / dt * dx + dot(grad(u), grad(v)) * dx - (u_n / dt + f) * v * dx&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">solution</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_analytical_interpolated</span> <span class="o">=</span> <span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">expression</span><span class="o">=</span><span class="n">u_analytical_n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">init_adapter_conf</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="s1">&#39;precice_config/precice-adapter-config-N.json&#39;</span><span class="p">,</span> <span class="n">coupling_boundary_subdomain</span><span class="o">=</span><span class="s1">&#39;coupling_boundary&#39;</span><span class="p">,</span>
+                                                    <span class="n">write_object</span><span class="o">=</span><span class="n">u_analytical_interpolated</span><span class="p">,</span>  <span class="n">function_space</span><span class="o">=</span><span class="n">job_n</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">V_g</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">collapse</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job_n.adapter_conf.predefined_coupling(coupling_type=&quot;Neumann&quot;)</span>
+<span class="k">def</span> <span class="nf">update_coupling_neumann</span><span class="p">(</span><span class="n">coupling_expression</span><span class="p">,</span> <span class="n">coupling_boundary</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">F</span> <span class="o">+=</span> <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">v</span> <span class="o">*</span> <span class="n">coupling_expression</span> <span class="o">*</span> <span class="n">job</span><span class="o">.</span><span class="n">ds</span>
+
+<span class="k">def</span> <span class="nf">coupling_data_neumann</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">job</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">solution</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_n</span><span class="o">.</span><span class="n">adapter_conf</span><span class="o">.</span><span class="n">update_boundary_func</span> <span class="o">=</span> <span class="n">update_coupling_neumann</span>
+<span class="n">job_n</span><span class="o">.</span><span class="n">adapter_conf</span><span class="o">.</span><span class="n">coupling_data_func</span> <span class="o">=</span> <span class="n">coupling_data_neumann</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-precice-job">
+<h3>Creating Precice job<a class="headerlink" href="#creating-precice-job" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_p</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Precice</span><span class="p">(</span><span class="s1">&#39;precice_parent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Appending fenics jobs as child job to the precice job</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_p</span><span class="o">.</span><span class="n">child_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job_d</span><span class="p">)</span>
+<span class="n">job_p</span><span class="o">.</span><span class="n">child_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job_n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Running the precice job</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_p</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job precice_parent was saved and received the ID: 30
+The job fenics_drichlet was saved and received the ID: 31
+The job fenics_neumann was saved and received the ID: 32
+---[precice]  This is preCICE version 2.3.0
+---[precice]  Revision info: no-info [Git failed/Not a repository]
+---[precice]  Configuration: Debug
+---[precice]  Configuring preCICE with configuration &quot;/home/muhammad/workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/precice_config/precice-config.xml&quot;
+---[precice]  I am participant &quot;Dirichlet&quot;
+---[precice]  This is preCICE version 2.3.0
+---[precice]  Revision info: no-info [Git failed/Not a repository]
+---[precice]  Configuration: Debug
+---[precice]  Configuring preCICE with configuration &quot;/home/muhammad/workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/precice_config/precice-config.xml&quot;
+---[precice]  I am participant &quot;Neumann&quot;
+---[precice]  Setting up master communication to coupling partner/s
+---[precice]  Setting up master communication to coupling partner/s
+---[precice]  Masters are connected
+---[precice]  Masters are connected
+---[precice]  Setting up preliminary slaves communication to coupling partner/s
+---[precice]  Setting up preliminary slaves communication to coupling partner/s
+---[precice]  Prepare partition for mesh Dirichlet-Mesh
+---[precice]  Receive global mesh Dirichlet-Mesh
+---[precice]  Gather mesh Dirichlet-Mesh
+---[precice]  Send global mesh Dirichlet-Mesh
+---[precice]  Receive global mesh Neumann-Mesh---[precice]  Prepare partition for mesh Neumann-Mesh
+
+---[precice]  Gather mesh Neumann-Mesh
+---[precice]  Send global mesh Neumann-Mesh
+---[precice]  Setting up slaves communication to coupling partner/s---[precice]  Setting up slaves communication to coupling partner/s
+
+---[precice]  Slaves are connected---[precice]  Slaves are connected
+
+---[precice]  iteration: 1 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, write-iteration-checkpoint 
+---[precice]  iteration: 1 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, write-initial-data write-iteration-checkpoint 
+---[precice]  Compute &quot;read&quot; mapping from mesh &quot;Neumann-Mesh&quot; to mesh &quot;Dirichlet-Mesh&quot;.
+---[precice]  Using tree-based preallocation for matrix C
+---[precice]  Using tree-based preallocation for matrix A
+---[precice]  Using rescaling. Solver converged after 5 of 10000 iterations due to sufficient relative convergence. Last residual norm: 2.70042e-13, limits: relative 3.16228e-09 (rtol 1e-09), absolute 1e-50, divergence 3.16228e+30(dtol 1e+30)
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Compute &quot;read&quot; mapping from mesh &quot;Dirichlet-Mesh&quot; to mesh &quot;Neumann-Mesh&quot;.
+---[precice]  Using tree-based preallocation for matrix C
+---[precice]  Using tree-based preallocation for matrix A
+---[precice]  Using rescaling. Solver converged after 5 of 10000 iterations due to sufficient relative convergence. Last residual norm: 2.70042e-13, limits: relative 3.16228e-09 (rtol 1e-09), absolute 1e-50, divergence 3.16228e+30(dtol 1e+30)
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.00e+00, limit = 1.00e-05, normalization = 4.18e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.93e-01, limit = 1.00e-05, normalization = 8.99e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 2 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 2 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 2.61e-01, limit = 1.00e-05, normalization = 3.33e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.53e-01, limit = 1.00e-05, normalization = 9.10e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 3 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 3 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.81e+00, limit = 1.00e-05, normalization = 2.61e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.35e-03, limit = 1.00e-05, normalization = 9.58e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 4 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 4 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 3.96e-02, limit = 1.00e-05, normalization = 2.60e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 6.25e-04, limit = 1.00e-05, normalization = 9.58e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 5 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 5 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.49e-02, limit = 1.00e-05, normalization = 2.60e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 7.13e-05, limit = 1.00e-05, normalization = 9.58e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 6 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 6 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.98e-03, limit = 1.00e-05, normalization = 2.60e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 9.30e-06, limit = 1.00e-05, normalization = 9.58e+00, conv = true
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 7 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 7 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 2.62e-04, limit = 1.00e-05, normalization = 2.60e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.33e-06, limit = 1.00e-05, normalization = 9.58e+00, conv = true
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 8 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 8 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 3.52e-05, limit = 1.00e-05, normalization = 2.60e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.72e-07, limit = 1.00e-05, normalization = 9.58e+00, conv = true
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 9 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 9 of 100, time-window: 1, time: 0 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+fenics_drichlet: done with the timestep: 1
+fenics_neumann: done with the timestep: 1
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 4.89e-06, limit = 1.00e-05, normalization = 2.60e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.99e-08, limit = 1.00e-05, normalization = 9.58e+00, conv = true
+---[precice]  All converged
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 9.87e-01, limit = 1.00e-05, normalization = 1.58e+01, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.08e+00, limit = 1.00e-05, normalization = 6.28e+00, conv = false
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 2 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+fenics_drichlet: done with the timestep: 2
+fenics_neumann: done with the timestep: 2
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 2 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 4.40e+00, limit = 1.00e-05, normalization = 3.66e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 4.24e-02, limit = 1.00e-05, normalization = 7.39e+00, conv = false
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 3 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 3 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 8.00e-01, limit = 1.00e-05, normalization = 2.82e+00, conv = false
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.02e-10, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 4 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 4 of 100, time-window: 2, time: 0.1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: no, read-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 6.54e-10, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 4.23e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> The number of columns in the least squares system exceeded half the number of unknowns at the interface. The system will probably become bad or ill-conditioned and the quasi-Newton acceleration may not converge. Maybe the number of allowed columns (&quot;max-used-iterations&quot;) should be limited.
+---[precice] <span class=" -Color -Color-Cyan">WARNING: </span> Matrix Q is not sufficiently orthogonal. Failed to rorthogonalize new column after 4 iterations. New column will be discarded. The least-squares system is very bad conditioned and the quasi-Newton will most probably fail to converge.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 3, time: 0.2 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 3, time: 0.2 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+fenics_drichlet: done with the timestep: 3
+fenics_neumann: done with the timestep: 3
+fenics_drichlet: done with the timestep: 4
+fenics_neumann: done with the timestep: 4
+fenics_drichlet: done with the timestep: 5
+fenics_neumann: done with the timestep: 5
+fenics_drichlet: done with the timestep: 6
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 3.00e-10, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.71e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 4, time: 0.3 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 4, time: 0.3 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 4.12e-10, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 2.32e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 5, time: 0.4 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 5, time: 0.4 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 5.73e-10, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 3.18e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 6, time: 0.5 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 6, time: 0.5 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 8.00e-10, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 4.39e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 7, time: 0.6 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+fenics_neumann: done with the timestep: 6
+fenics_drichlet: done with the timestep: 7
+fenics_neumann: done with the timestep: 7
+fenics_drichlet: done with the timestep: 8
+fenics_neumann: done with the timestep: 8
+fenics_drichlet: done with the timestep: 9
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 7, time: 0.6 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.12e-09, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 6.08e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 8, time: 0.7 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 8, time: 0.7 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 1.56e-09, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 8.43e-11, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 9, time: 0.8 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 9, time: 0.8 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 2.17e-09, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.17e-10, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 10, time: 0.9 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+Solving linear variational problem.
+---[precice]  Time window completed
+---[precice]  Mapping &quot;Flux&quot; consistent from &quot;Dirichlet-Mesh&quot; (ID 0) to &quot;Neumann-Mesh&quot; (ID 1) for dimension 0 with polynomial set to separate
+fenics_neumann: done with the timestep: 9
+fenics_neumann: done with the timestep: 10fenics_drichlet: done with the timestep: 10
+
+---[precice]  iteration: 1 of 100, time-window: 10, time: 0.9 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: yes, time-window-complete: yes, write-iteration-checkpoint 
+Solving linear variational problem.
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Flux&quot; = 3.03e-09, limit = 1.00e-05, normalization = 2.82e+00, conv = true
+---[precice]  relative convergence measure: relative two-norm diff of data &quot;Temperature&quot; = 1.15e-10, limit = 1.00e-05, normalization = 7.33e+00, conv = true
+---[precice]  All converged
+---[precice]  Time window completed
+---[precice]  Time window completed
+---[precice]  iteration: 1 of 100, time-window: 11, time: 1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: no, time-window-complete: yes, 
+---[precice]  Mapping &quot;Temperature&quot; consistent from &quot;Neumann-Mesh&quot; (ID 1) to &quot;Dirichlet-Mesh&quot; (ID 0) for dimension 0 with polynomial set to separate
+---[precice]  iteration: 1 of 100, time-window: 11, time: 1 of 1, time-window-size: 0.1, max-timestep-length: 0.1, ongoing: no, time-window-complete: yes, 
+---[precice]  Synchronize participants and close communication channels
+---[precice]  Synchronize participants and close communication channels
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30</td>
+      <td>finished</td>
+      <td>None</td>
+      <td>precice_parent</td>
+      <td>/precice_parent</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/partitioned_heat_conduction/</td>
+      <td>2022-02-19 22:28:26.797079</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Precice</td>
+      <td>0.4</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>31</td>
+      <td>finished</td>
+      <td>None</td>
+      <td>fenics_drichlet</td>
+      <td>/fenics_drichlet</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/partitioned_heat_conduction/</td>
+      <td>2022-02-19 22:28:26.992515</td>
+      <td>2022-02-19 22:28:29.763984</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Fenics</td>
+      <td>0.4</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32</td>
+      <td>finished</td>
+      <td>None</td>
+      <td>fenics_neumann</td>
+      <td>/fenics_neumann</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/gitRepo/pyiron-repos/pyiron_continuum/notebooks/partitioned_heat_conduction/</td>
+      <td>2022-02-19 22:28:27.006138</td>
+      <td>2022-02-19 22:28:29.773518</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Fenics</td>
+      <td>0.4</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;/usr/bin/Xvfb :99 -screen 0 1024x768x24 &amp;&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DISPLAY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;:99&#39;</span>
+
+<span class="kn">import</span> <span class="nn">panel</span> <span class="k">as</span> <span class="nn">pn</span>
+<span class="n">pn</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">&#39;vtk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>_XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root
+</pre></div>
+</div>
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, js_modules, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+    if (js_modules == null) js_modules = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls.length === 0 && js_modules.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    var skip = [];
+    if (window.requirejs) {
+      window.requirejs.config({'packages': {}, 'paths': {'vtk': 'https://unpkg.com/vtk.js@14.16.4/dist/vtk'}, 'shim': {'vtk': {'exports': 'vtk'}}});
+      
+      require(["vtk"], function() {
+	
+	on_load()
+      })
+      
+      root._bokeh_is_loading = css_urls.length + 1;
+    } else {
+      root._bokeh_is_loading = css_urls.length + js_urls.length + js_modules.length;
+    }
+    if (((window['vtk'] !== undefined) && (!(window['vtk'] instanceof HTMLElement))) || window.requirejs) {
+      var urls = ['https://unpkg.com/vtk.js@14.16.4/dist/vtk.js'];
+      for (var i = 0; i < urls.length; i++) {
+        skip.push(urls[i])
+      }
+    }
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      if (skip.indexOf(url) >= 0) {
+	if (!window.requirejs) {
+	  on_load();
+	}
+	continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (var i = 0; i < js_modules.length; i++) {
+      var url = js_modules[i];
+      if (skip.indexOf(url) >= 0) {
+	if (!window.requirejs) {
+	  on_load();
+	}
+	continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    if (!js_urls.length && !js_modules.length) {
+      on_load()
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  var js_urls = ["https://unpkg.com/vtk.js@14.16.4/dist/vtk.js", "https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js", "https://unpkg.com/@holoviz/panel@0.12.6/dist/panel.min.js"];
+  var js_modules = [];
+  var css_urls = ["https://unpkg.com/@holoviz/panel@0.12.6/dist/css/widgets.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/json.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/markdown.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/loading.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/alerts.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/dataframe.css", "https://unpkg.com/@holoviz/panel@0.12.6/dist/css/card.css"];
+  var inline_js = [
+    function(Bokeh) {
+      inject_raw_css("\n    .bk.pn-loading.arcs:before {\n      background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBiYWNrZ3JvdW5kOiBub25lOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4gIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMyIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZT0iI2MzYzNjMyIgc3Ryb2tlLWRhc2hhcnJheT0iNTAuMjY1NDgyNDU3NDM2NjkgNTAuMjY1NDgyNDU3NDM2NjkiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+ICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIxcyIga2V5VGltZXM9IjA7MSIgdmFsdWVzPSIwIDUwIDUwOzM2MCA1MCA1MCI+PC9hbmltYXRlVHJhbnNmb3JtPiAgPC9jaXJjbGU+PC9zdmc+\");\n      max-height: 400px;\n    }\n    ");
+    },
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {} // ensure no trailing comma for IE
+  ];
+
+  function run_inline_js() {
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+        inline_js[i].call(root, root.Bokeh);
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    }
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, js_modules, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script><script type="application/javascript">
+if ((window.PyViz === undefined) || (window.PyViz instanceof HTMLElement)) {
+  window.PyViz = {comms: {}, comm_status:{}, kernels:{}, receivers: {}, plot_index: []}
+}
+
+
+    function JupyterCommManager() {
+    }
+
+    JupyterCommManager.prototype.register_target = function(plot_id, comm_id, msg_handler) {
+      if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        comm_manager.register_target(comm_id, function(comm) {
+          comm.on_msg(msg_handler);
+        });
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        window.PyViz.kernels[plot_id].registerCommTarget(comm_id, function(comm) {
+          comm.onMsg = msg_handler;
+        });
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        google.colab.kernel.comms.registerTarget(comm_id, (comm) => {
+          var messages = comm.messages[Symbol.asyncIterator]();
+          function processIteratorResult(result) {
+            var message = result.value;
+            console.log(message)
+            var content = {data: message.data, comm_id};
+            var buffers = []
+            for (var buffer of message.buffers || []) {
+              buffers.push(new DataView(buffer))
+            }
+            var metadata = message.metadata || {};
+            var msg = {content, buffers, metadata}
+            msg_handler(msg);
+            return messages.next().then(processIteratorResult);
+          }
+          return messages.next().then(processIteratorResult);
+        })
+      }
+    }
+
+    JupyterCommManager.prototype.get_client_comm = function(plot_id, comm_id, msg_handler) {
+      if (comm_id in window.PyViz.comms) {
+        return window.PyViz.comms[comm_id];
+      } else if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        var comm = comm_manager.new_comm(comm_id, {}, {}, {}, comm_id);
+        if (msg_handler) {
+          comm.on_msg(msg_handler);
+        }
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        var comm = window.PyViz.kernels[plot_id].connectToComm(comm_id);
+        comm.open();
+        if (msg_handler) {
+          comm.onMsg = msg_handler;
+        }
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        var comm_promise = google.colab.kernel.comms.open(comm_id)
+        comm_promise.then((comm) => {
+          window.PyViz.comms[comm_id] = comm;
+          if (msg_handler) {
+            var messages = comm.messages[Symbol.asyncIterator]();
+            function processIteratorResult(result) {
+              var message = result.value;
+              var content = {data: message.data};
+              var metadata = message.metadata || {comm_id};
+              var msg = {content, metadata}
+              msg_handler(msg);
+              return messages.next().then(processIteratorResult);
+            }
+            return messages.next().then(processIteratorResult);
+          }
+        }) 
+        var sendClosure = (data, metadata, buffers, disposeOnDone) => {
+          return comm_promise.then((comm) => {
+            comm.send(data, metadata, buffers, disposeOnDone);
+          });
+        };
+        var comm = {
+          send: sendClosure
+        };
+      }
+      window.PyViz.comms[comm_id] = comm;
+      return comm;
+    }
+    window.PyViz.comm_manager = new JupyterCommManager();
+    
+
+
+var JS_MIME_TYPE = 'application/javascript';
+var HTML_MIME_TYPE = 'text/html';
+var EXEC_MIME_TYPE = 'application/vnd.holoviews_exec.v0+json';
+var CLASS_NAME = 'output';
+
+/**
+ * Render data to the DOM node
+ */
+function render(props, node) {
+  var div = document.createElement("div");
+  var script = document.createElement("script");
+  node.appendChild(div);
+  node.appendChild(script);
+}
+
+/**
+ * Handle when a new output is added
+ */
+function handle_add_output(event, handle) {
+  var output_area = handle.output_area;
+  var output = handle.output;
+  if ((output.data == undefined) || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+    return
+  }
+  var id = output.metadata[EXEC_MIME_TYPE]["id"];
+  var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+  if (id !== undefined) {
+    var nchildren = toinsert.length;
+    var html_node = toinsert[nchildren-1].children[0];
+    html_node.innerHTML = output.data[HTML_MIME_TYPE];
+    var scripts = [];
+    var nodelist = html_node.querySelectorAll("script");
+    for (var i in nodelist) {
+      if (nodelist.hasOwnProperty(i)) {
+        scripts.push(nodelist[i])
+      }
+    }
+
+    scripts.forEach( function (oldScript) {
+      var newScript = document.createElement("script");
+      var attrs = [];
+      var nodemap = oldScript.attributes;
+      for (var j in nodemap) {
+        if (nodemap.hasOwnProperty(j)) {
+          attrs.push(nodemap[j])
+        }
+      }
+      attrs.forEach(function(attr) { newScript.setAttribute(attr.name, attr.value) });
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+    if (JS_MIME_TYPE in output.data) {
+      toinsert[nchildren-1].children[1].textContent = output.data[JS_MIME_TYPE];
+    }
+    output_area._hv_plot_id = id;
+    if ((window.Bokeh !== undefined) && (id in Bokeh.index)) {
+      window.PyViz.plot_index[id] = Bokeh.index[id];
+    } else {
+      window.PyViz.plot_index[id] = null;
+    }
+  } else if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+    var bk_div = document.createElement("div");
+    bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+    var script_attrs = bk_div.children[0].attributes;
+    for (var i = 0; i < script_attrs.length; i++) {
+      toinsert[toinsert.length - 1].childNodes[1].setAttribute(script_attrs[i].name, script_attrs[i].value);
+    }
+    // store reference to server id on output_area
+    output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+  }
+}
+
+/**
+ * Handle when an output is cleared or removed
+ */
+function handle_clear_output(event, handle) {
+  var id = handle.cell.output_area._hv_plot_id;
+  var server_id = handle.cell.output_area._bokeh_server_id;
+  if (((id === undefined) || !(id in PyViz.plot_index)) && (server_id !== undefined)) { return; }
+  var comm = window.PyViz.comm_manager.get_client_comm("hv-extension-comm", "hv-extension-comm", function () {});
+  if (server_id !== null) {
+    comm.send({event_type: 'server_delete', 'id': server_id});
+    return;
+  } else if (comm !== null) {
+    comm.send({event_type: 'delete', 'id': id});
+  }
+  delete PyViz.plot_index[id];
+  if ((window.Bokeh !== undefined) & (id in window.Bokeh.index)) {
+    var doc = window.Bokeh.index[id].model.document
+    doc.clear();
+    const i = window.Bokeh.documents.indexOf(doc);
+    if (i > -1) {
+      window.Bokeh.documents.splice(i, 1);
+    }
+  }
+}
+
+/**
+ * Handle kernel restart event
+ */
+function handle_kernel_cleanup(event, handle) {
+  delete PyViz.comms["hv-extension-comm"];
+  window.PyViz.plot_index = {}
+}
+
+/**
+ * Handle update_display_data messages
+ */
+function handle_update_output(event, handle) {
+  handle_clear_output(event, {cell: {output_area: handle.output_area}})
+  handle_add_output(event, handle)
+}
+
+function register_renderer(events, OutputArea) {
+  function append_mime(data, metadata, element) {
+    // create a DOM node to render to
+    var toinsert = this.create_output_subarea(
+    metadata,
+    CLASS_NAME,
+    EXEC_MIME_TYPE
+    );
+    this.keyboard_manager.register_events(toinsert);
+    // Render to node
+    var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+    render(props, toinsert[0]);
+    element.append(toinsert);
+    return toinsert
+  }
+
+  events.on('output_added.OutputArea', handle_add_output);
+  events.on('output_updated.OutputArea', handle_update_output);
+  events.on('clear_output.CodeCell', handle_clear_output);
+  events.on('delete.Cell', handle_clear_output);
+  events.on('kernel_ready.Kernel', handle_kernel_cleanup);
+
+  OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+    safe: true,
+    index: 0
+  });
+}
+
+if (window.Jupyter !== undefined) {
+  try {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  } catch(err) {
+  }
+}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_d</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;out/Dirichlet000010.vtu&quot;</span><span class="p">)</span>
+<span class="n">mesh_n</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;out/Neumann000010.vtu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>Header</th><th>Data Arrays</th></tr><tr><td>
+<table>
+<tr><th>UnstructuredGrid</th><th>Information</th></tr>
+<tr><td>N Cells</td><td>162</td></tr>
+<tr><td>N Points</td><td>100</td></tr>
+<tr><td>X Bounds</td><td>1.000e+00, 2.000e+00</td></tr>
+<tr><td>Y Bounds</td><td>0.000e+00, 1.000e+00</td></tr>
+<tr><td>Z Bounds</td><td>0.000e+00, 0.000e+00</td></tr>
+<tr><td>N Arrays</td><td>1</td></tr>
+</table>
+
+</td><td>
+<table>
+<tr><th>Name</th><th>Field</th><th>Type</th><th>N Comp</th><th>Min</th><th>Max</th></tr>
+<tr><td><b>Temperature</b></td><td>Points</td><td>float64</td><td>1</td><td>3.300e+00</td><td>9.300e+00</td></tr>
+</table>
+
+</td></tr> </table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_d</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scalars</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e96b13d4c4da47f09d9360194c331040", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_n</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scalars</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "74ca8dbe9fa844b6ae5a18e52fe612d3", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh_n</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="p">[</span><span class="mf">2.30</span><span class="p">,</span> <span class="mf">6.30</span><span class="p">])</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh_d</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="p">[</span><span class="mf">2.30</span><span class="p">,</span> <span class="mf">6.30</span><span class="p">])</span>
+<span class="c1">#_ = p.add_axes(line_width=5, labels_off=True)</span>
+<span class="c1">#_ = p.add_axes_at_origin(line_width=0.5)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">view_xy</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "45b6736fc88c473c8712fa00ab835dfd", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">mesh_n</span> <span class="o">+</span> <span class="n">mesh_d</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">plot_over_line</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fenics_precice_heat_conduction_64_0.png" src="_images/fenics_precice_heat_conduction_64_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">pyiron workflow template</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By pyiron<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
