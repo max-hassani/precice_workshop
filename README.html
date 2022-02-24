@@ -42,12 +42,11 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -234,7 +233,7 @@
   <p><a class="reference external" href="https://mybinder.org/v2/gh/muh-hassani/precice_workshop/master?labpath=fenics_precice_heat_conduction.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
 <div class="tex2jax_ignore mathjax_ignore section" id="an-interface-to-precice-in-pyiron-workflows">
 <h1>An interface to preCICE in pyiron workflows<a class="headerlink" href="#an-interface-to-precice-in-pyiron-workflows" title="Permalink to this headline">¶</a></h1>
-<p>Pyiron[<a class="reference external" href="https://pyiron.org">https://pyiron.org</a>] is an user-friendly integrated development environment for materials science, in which all necessary steps to develop and run complex simulation workflows can be performed and combined. This includes the initial setup, the remote/interactive submission on high-performance compute clusters (HPC), the post-processing, as well as the management, mining, and visualization of the produced data. Besides the core components for the workflow management, pyiron provides a high-level unified language for multiple simulation tools. Examples are density functional theory calculations on the electronic scale with <a class="reference external" href="http://sxrepo.mpie.de/">Sphinx</a>, molecular dynamics simulations on the atomic scale with <a class="reference external" href="http://www.lammps.org/">LAMMPS</a> or simulations of the elastoplastic response of materials on the continuum scale with <a class="reference external" href="https://damask.mpie.de/">DAMASK</a>.</p>
+<p><a class="reference external" href="https://pyiron.org">Pyiron</a> is an user-friendly integrated development environment for materials science, in which all necessary steps to develop and run complex simulation workflows can be performed and combined. This includes the initial setup, the remote/interactive submission on high-performance compute clusters (HPC), the post-processing, as well as the management, mining, and visualization of the produced data. Besides the core components for the workflow management, pyiron provides a high-level unified language for multiple simulation tools. Examples are density functional theory calculations on the electronic scale with <a class="reference external" href="http://sxrepo.mpie.de/">Sphinx</a>, molecular dynamics simulations on the atomic scale with <a class="reference external" href="http://www.lammps.org/">LAMMPS</a> or simulations of the elastoplastic response of materials on the continuum scale with <a class="reference external" href="https://damask.mpie.de/">DAMASK</a>.</p>
 <p>Using a Jupyter environment, pyiron worklows are easily accessible, can be shared alongside their publications, are reproducible and reusable, benefitting in particular from the interoperability between various simulation tools.</p>
 <p>Here, we present our recently developed pyiron job class to couple continuum scale tools using the preCICE python API. An example of two FEniCS simulations, coupled to solve heat transfer equations, is chosen as a demonstrator to highlight the ease and flexibility of using pyiron.</p>
 <div class="section" id="the-workflow">
