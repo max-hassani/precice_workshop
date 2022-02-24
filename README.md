@@ -5,7 +5,7 @@
 
 Using a Jupyter environment, pyiron worklows are easily accessible, can be shared alongside their publications, are reproducible and reusable, benefitting in particular from the interoperability between various simulation tools.  
 
-Here, we present our recently developed pyiron job class to couple continuum scale tools using the preCICE python API. An example of two FEniCS simulations, coupled to solve heat transfer equations, is chosen as a demonstrator to highlight the ease and flexibility of using pyiron.
+Here, we present our recently developed pyiron job class to couple continuum scale tools using the [preCICE](https://precice.org) python API. An example of two FEniCS simulations, coupled to solve heat transfer equations, is chosen as a demonstrator to highlight the ease and flexibility of using pyiron.
 
 ## The workflow
 The workflow here uses `pyiron_continuum` to create two fenics jobs, which each solves heat conduction equations. Additionally, the job have a adapter_conf object, which defines the coupling between defined jobs using `fenics-precice` adapter. 
